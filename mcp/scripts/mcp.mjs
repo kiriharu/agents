@@ -35,7 +35,7 @@ function loadServers() {
 function envConvert(env) {
   const out = {};
   for (const [k, v] of Object.entries(env)) {
-    out[k] = v.replace(/\{env:(\w+)\}/g, '$${$1}');
+    out[k] = v.replace(/\{env:(\w+)\}/g, '$${env:$1}');
   }
   return out;
 }

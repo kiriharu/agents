@@ -69,7 +69,7 @@ mcp/
 | `remote.url` | `url` | `url` |
 | `remote.headers` | `headers` | — (not supported by Cursor) |
 | `timeout` | `timeout` | — (not supported by Cursor) |
-| `{env:VAR}` | kept as-is | converted to `${VAR}` |
+| `{env:VAR}` | kept as-is | converted to `${env:VAR}` |
 
 ### Target files
 

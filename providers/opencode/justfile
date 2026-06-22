@@ -1,0 +1,10 @@
+set shell := ["sh", "-uc"]
+
+ponytail-install:
+    node ./ponytail/scripts/install.mjs
+
+ponytail-update:
+    node ./ponytail/scripts/update.mjs
+
+ponytail-uninstall:
+    node ./ponytail/scripts/uninstall.mjs

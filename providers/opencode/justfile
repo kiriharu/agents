@@ -8,3 +8,12 @@ ponytail-update:
 
 ponytail-uninstall:
     node ./ponytail/scripts/uninstall.mjs
+
+ask-install:
+    node ./ask/scripts/install.mjs
+
+ask-update:
+    node ./ask/scripts/update.mjs
+
+ask-uninstall:
+    node ./ask/scripts/uninstall.mjs

@@ -1,0 +1,11 @@
+{
+  "name": "gh_grep",
+  "description": "GitHub code search via grep.app",
+  "transport": "remote",
+  "timeout": 5000,
+  "enabled": true,
+  "agents": ["opencode", "cursor"],
+  "remote": {
+    "url": "https://mcp.grep.app"
+  }
+}

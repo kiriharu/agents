@@ -2,12 +2,12 @@
 set -eu
 
 SKILL_NAME="$1"
+TARGET_DIR="${2:-$HOME/.config/opencode/skills}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SKILLS_DATA_DIR="$SCRIPT_DIR/../data"
-OPENCODE_SKILLS_DIR="$HOME/.config/opencode/skills"
 
 SRC="$SKILLS_DATA_DIR/$SKILL_NAME"
-DST="$OPENCODE_SKILLS_DIR/$SKILL_NAME"
+DST="$TARGET_DIR/$SKILL_NAME"
 
 if [ ! -d "$SRC" ] || [ ! -f "$SRC/SKILL.md" ]; then
     echo "  [ERROR] Skill '$SKILL_NAME' not found in data/"

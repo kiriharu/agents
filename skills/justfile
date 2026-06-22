@@ -3,3 +3,7 @@ set shell := ["sh", "-uc"]
 # Sync all skills from data/ to ~/.config/opencode/skills/
 sync:
     ./scripts/sync.sh
+
+# Sync all skills from data/ to ~/.cursor/skills/
+sync-cursor:
+    ./scripts/sync-cursor.sh

@@ -40,6 +40,35 @@ function envConvert(env) {
   return out;
 }
 
+function extractEnvVars(servers) {
+  const vars = new Set();
+  for (const s of servers) {
+    for (const obj of [s.local?.env, s.remote?.headers]) {
+      if (!obj) continue;
+      for (const v of Object.values(obj)) {
+        if (typeof v !== 'string') continue;
+        for (const m of v.matchAll(/\{env:(\w+)\}/g)) vars.add(m[1]);
+      }
+    }
+  }
+  return [...vars].sort();
+}
+
+function checkEnvVars(servers) {
+  const vars = extractEnvVars(servers);
+  if (vars.length === 0) return true;
+  let missing = 0;
+  for (const v of vars) {
+    if (process.env[v]) {
+      console.log(`  ✓ ${v}`);
+    } else {
+      console.log(`  ✗ ${v} — not set`);
+      missing++;
+    }
+  }
+  return missing === 0;
+}
+
 function timestamp() {
   return new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
 }
@@ -258,6 +287,8 @@ function syncCmd() {
   } else {
     console.log('○ Cursor: no matching servers (skipped)');
   }
+
+  checkEnvCmd(false);
 }
 
 // ─── validate ──────────────────────────────────────────────────────
@@ -352,6 +383,29 @@ function validateServer(server, schema) {
   return errs;
 }
 
+// ─── check-env ─────────────────────────────────────────────────────
+function checkEnvCmd(shouldExit = true) {
+  const { servers, errors } = loadServers();
+  if (errors.length) {
+    console.error('⚠ Fix parse errors before checking env:');
+    for (const e of errors) console.error(`  ${e}`);
+    if (shouldExit) process.exit(1);
+    return false;
+  }
+
+  const vars = extractEnvVars(servers);
+  if (vars.length === 0) {
+    console.log('No env vars referenced in any server definition.');
+    return true;
+  }
+
+  console.log(`\nChecking ${vars.length} env var(s):\n`);
+  const allSet = checkEnvVars(servers);
+  console.log(allSet ? '\n✓ All env vars set.' : '\n⚠ Run `just check-env` to see details.');
+  if (!allSet && shouldExit) process.exit(1);
+  return allSet;
+}
+
 // ─── dispatch ──────────────────────────────────────────────────────
 const cmd = process.argv[2];
 
@@ -367,8 +421,10 @@ if (cmd === 'list' || !cmd) {
   syncCmd();
 } else if (cmd === 'validate') {
   validateCmd();
+} else if (cmd === 'check-env') {
+  checkEnvCmd();
 } else {
   console.error(`Unknown command: ${cmd}`);
-  console.error('Usage: node mcp.mjs [list|show <name>|add|sync|validate]');
+  console.error('Usage: node mcp.mjs [list|show <name>|add|sync|validate|check-env]');
   process.exit(1);
 }

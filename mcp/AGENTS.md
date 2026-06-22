@@ -98,6 +98,7 @@ To restore: `cp <target>.bak.<timestamp> <target>`
 | `just add` | Interactive prompts → creates `servers/<name>.json` |
 | `just sync` | Transform + write all enabled servers to agent configs |
 | `just validate` | Check all `servers/*.json` against `schema.json` |
+| `just check-env` | Verify all referenced `{env:VAR}` are set in current environment |
 
 ## Example: add a new server
 

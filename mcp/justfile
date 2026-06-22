@@ -12,3 +12,6 @@ sync:
 
 validate:
     node scripts/mcp.mjs validate
+
+check-env:
+    node scripts/mcp.mjs check-env

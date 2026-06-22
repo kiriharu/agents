@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "MCP Server Definition",
+  "required": ["name", "transport", "agents"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Unique identifier for this MCP server (slug)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of what this server does"
+    },
+    "transport": {
+      "type": "string",
+      "enum": ["local", "remote"],
+      "description": "How the MCP server is run: 'local' process or 'remote' HTTP"
+    },
+    "timeout": {
+      "type": "number",
+      "default": 30000,
+      "description": "Timeout in milliseconds for MCP server requests"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Set to false to exclude from sync without deleting"
+    },
+    "agents": {
+      "type": "array",
+      "description": "Which coding agents this server should be synced to",
+      "items": {
+        "type": "string",
+        "enum": ["opencode", "cursor"]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "local": {
+      "type": "object",
+      "description": "Configuration for transport = 'local'",
+      "required": ["command"],
+      "properties": {
+        "command": {
+          "type": "string",
+          "description": "Executable to run (e.g. 'npx', 'node', 'python')"
+        },
+        "args": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Command-line arguments"
+        },
+        "env": {
+          "type": "object",
+          "description": "Environment variables (use {env:VAR} for runtime resolution)",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "remote": {
+      "type": "object",
+      "description": "Configuration for transport = 'remote'",
+      "required": ["url"],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the remote MCP server"
+        },
+        "headers": {
+          "type": "object",
+          "description": "HTTP headers (use {env:VAR} for runtime resolution)",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    }
+  },
+  "if": {
+    "properties": { "transport": { "const": "local" } }
+  },
+  "then": { "required": ["local"] },
+  "else": { "required": ["remote"] }
+}

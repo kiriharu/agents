@@ -1,0 +1,14 @@
+list:
+    node scripts/mcp.mjs list
+
+show NAME:
+    node scripts/mcp.mjs show {{NAME}}
+
+add:
+    node scripts/mcp.mjs add
+
+sync:
+    node scripts/mcp.mjs sync
+
+validate:
+    node scripts/mcp.mjs validate

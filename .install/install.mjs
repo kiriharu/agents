@@ -8,12 +8,14 @@ const agents = {
       ['MCP servers',     'mcp',                   'sync'],
       ['Ponytail plugin', 'providers/opencode',    'ponytail-install'],
       ['Ask agent',       'providers/opencode',    'ask-install'],
+      ['Graphify skill',  'providers/opencode',    'graphify-install'],
     ],
   },
   cursor: {
     steps: [
-      ['Skills',      'skills', 'sync-cursor'],
-      ['MCP servers', 'mcp',    'sync'],
+      ['Skills',          'skills',                'sync-cursor'],
+      ['MCP servers',     'mcp',                   'sync'],
+      ['Graphify skill',  'providers/cursor',      'graphify-install'],
     ],
   },
 };

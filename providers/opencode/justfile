@@ -17,3 +17,12 @@ ask-update:
 
 ask-uninstall:
     node ./ask/scripts/uninstall.mjs
+
+graphify-install:
+    node ./graphify/scripts/install.mjs
+
+graphify-update:
+    node ./graphify/scripts/update.mjs
+
+graphify-uninstall:
+    node ./graphify/scripts/uninstall.mjs

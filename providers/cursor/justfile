@@ -1,0 +1,10 @@
+set shell := ["sh", "-uc"]
+
+graphify-install:
+    node ./graphify/scripts/install.mjs
+
+graphify-update:
+    node ./graphify/scripts/update.mjs
+
+graphify-uninstall:
+    node ./graphify/scripts/uninstall.mjs
